@@ -10,7 +10,18 @@ def addition(a,b):
 def subtraction(a,b):
     return a - b
 
+# def arrayToString(array):
+#     string = ''
+#     for index in range(len(array)):
+#         string = array[index]
+#     return string
+
 def crypt(operator,key,target):
+    print '------------------------------------------------------'
+    print 'Method:\t\t',operator.__name__
+    print 'Key:\t\t', key
+    print 'Message:\t', target
+    print '------------------------------------------------------'
     ALPHABET_SIZE = 26
     mapToNum = shifter.mapToNum
     mapToChar = shifter.mapToChar
@@ -24,19 +35,27 @@ def crypt(operator,key,target):
         rootNumArr[index] = mapToNum[target[index]]
     #print shiftNumArr
 
-    os.system("rm *.pyc")
+
 
     for index in range(len(target)):
         finalProduct[index] =  mapToChar[operator(rootNumArr[index] , shiftNumArr[index]) % ALPHABET_SIZE]
-        #print mapToChar[(shiftNumArr[index] + rootNumArr[index]) % ALPHABET_SIZE]
+
+    finalProduct = ''.join(finalProduct)
+    print 'Final Message: ',finalProduct
     return finalProduct
 
 if __name__ == "__main__":
-    print 'Hello '
-    if sys.argv[1] == '-e':
-        print crypt(addition,sys.argv[2],sys.argv[3])
-    elif sys.argv[1] == '-d':
-        print crypt(subtraction,sys.argv[2],sys.argv[3])
+    os.system("rm *.pyc")
+    if sys.argv[1] == '-h' or sys.argv[1] == '-help':
+        print "Help stuff"
+        sys.exit()
+
+    alg = sys.argv[1]
+
+    if alg == '-e':
+        crypt(addition,sys.argv[2],sys.argv[3])
+    elif alg == '-d':
+        crypt(subtraction,sys.argv[2],sys.argv[3])
     else:
         print "ERROR: need to have encrypt/decrypt"
         sys.exit()
